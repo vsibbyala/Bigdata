@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>Razorfishrollup</groupId>
+  <artifactId>Razorfishrollup</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>Razorfishrollup</name>
+  <url>http://maven.apache.org</url>
+  
+  
+  
+<profiles>
+		<profile>
+			<id>scala-2.10</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<scalaVersion>2.10.4</scalaVersion>
+				<scalaBinaryVersion>2.10</scalaBinaryVersion>
+				<encoding>UTF-8</encoding>
+				<log4j.version>1.2.17</log4j.version>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.scala-lang</groupId>
+					<artifactId>scala-library</artifactId>
+					<version>${scalaVersion}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.scala-lang</groupId>
+					<artifactId>scala-compiler</artifactId>
+					<version>${scalaVersion}</version>
+				</dependency>
+
+				<dependency>
+					<groupId>org.apache.spark</groupId>
+					<artifactId>spark-core_2.10</artifactId>
+					<version>1.5.2</version>
+				</dependency>
+
+				<dependency>
+					<groupId>org.apache.spark</groupId>
+					<artifactId>spark-sql_2.11</artifactId>
+					<version>1.5.2</version>
+				</dependency>
+
+				<dependency>
+					<groupId>org.apache.spark</groupId>
+					<artifactId>spark-streaming_2.10</artifactId>
+					<version>1.5.2</version>
+				</dependency>
+
+				<dependency>
+					<groupId>org.apache.spark</groupId>
+					<artifactId>spark-streaming-kafka_2.11</artifactId>
+					<version>1.5.2</version>
+				</dependency>
+
+				<dependency>
+					<groupId>org.apache.spark</groupId>
+					<artifactId>spark-hive_2.10</artifactId>
+					<version>1.5.2</version>
+				</dependency>
+				<dependency>
+					<groupId>com.datastax.spark</groupId>
+					<artifactId>spark-cassandra-connector_2.10</artifactId>
+					<version>1.5.0-M3</version>
+				</dependency>
+
+				<!-- log 4j -->
+				<dependency>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+					<version>${log4j.version}</version>
+				</dependency>
+
+				<dependency>
+					<groupId>net.sf.opencsv</groupId>
+					<artifactId>opencsv</artifactId>
+					<version>2.3</version>
+				</dependency>
+				<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-email -->
+				<dependency>
+				    <groupId>org.apache.commons</groupId>
+				    <artifactId>commons-email</artifactId>
+				    <version>1.4</version>
+				</dependency>
+				<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
+				<dependency>
+				    <groupId>com.amazonaws</groupId>
+				    <artifactId>aws-java-sdk-s3</artifactId>
+				    <version>1.11.21</version>
+				</dependency>
+				<dependency>
+					<groupId>net.java.dev.jets3t</groupId>
+					<artifactId>jets3t</artifactId>
+					<version>0.9.2</version>
+				</dependency>
+				
+					<!-- <dependency> <groupId>kafka.spark.consumer</groupId> <artifactId>kafka-spark-consumer</artifactId> 
+					<version>1.0.5</version> </dependency> <dependency> <groupId>com.typesafe.akka</groupId> 
+					<artifactId>akka-actor_2.10</artifactId> <version>2.3.4</version> </dependency> 
+					<dependency> <groupId>com.typesafe.akka</groupId> <artifactId>akka-remote_2.10</artifactId> 
+					<version>2.3.4</version> </dependency> <dependency> <groupId>com.databricks</groupId> 
+					<artifactId>spark-csv_2.10</artifactId> <version>0.1</version> </dependency> 
+					<dependency> <groupId>com.datastax.spark</groupId> <artifactId>spark-cassandra-connector_2.10</artifactId> 
+					<version>1.4.1</version> </dependency> <dependency> <groupId>com.datastax.spark</groupId> 
+					<artifactId>spark-cassandra-connector-java_2.10</artifactId> <version>1.4.1</version> 
+					</dependency> <dependency> <groupId>com.datastax.cassandra</groupId> <artifactId>cassandra-driver-core</artifactId> 
+					<version>2.1.9</version> </dependency> -->
+			</dependencies>
+		</profile>
+	</profiles>
+	<build>
+		<sourceDirectory>src/main</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>scala-maven-plugin</artifactId>
+				<version>3.1.6</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<args>
+						<!-- work-around for https://issues.scala-lang.org/browse/SI-8358 -->
+						<arg>-nobootcp</arg>
+					</args>
+				</configuration>
+			</plugin>
+			<!-- <plugin> <artifactId>maven-assembly-plugin</artifactId> <version>2.4.1</version> 
+				<configuration> <descriptorRefs> <descriptorRef>jar-with-dependencies</descriptorRef> 
+				</descriptorRefs> </configuration> <executions> <execution> <id>make-assembly</id> 
+				<phase>package</phase> <goals> <goal>single</goal> </goals> </execution> 
+				</executions> </plugin> -->
+		</plugins>
+	</build>
+
+</project>
